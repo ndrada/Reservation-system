@@ -1,0 +1,141 @@
+.app-container {
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-area {
+    width: 80vw;
+    max-width: 600px;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reservations-area {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #343232;
+    border-radius: 35px;
+    padding: 25px;
+}
+
+.reservations-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 60%;
+    padding: 30px 0;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.first-name-container, .last-name-container, .email, .phone {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+
+input {
+    border-radius: 20px;
+    border: none;
+    padding: 5px;
+    height: 40px;
+}
+
+.party-size {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 30%;
+    width: 50%;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.counter {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.minus-button, .plus-button {
+    background-color: transparent;
+    border: none;
+    color: #e9e6d6;
+    font-size: 100px;
+    padding: 10px;
+    font-family: "Bebas Neue", serif;
+    transition: all ease 0.3s;
+
+}
+
+.minus-button:hover,
+.plus-button:hover {
+    color: #0c5c35;
+}
+
+.number-section {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: white;
+    color: #343232;
+    font-size: 25px;
+}
+
+.button-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-button {
+    width: 30vw;
+    min-width: 200px;
+    max-width: 450px;
+    height: 75px;
+    border-radius: 35px;
+    border: none;
+    background-color: #0c5c35;
+    color: #e9e6d6;
+    font-size: 35px;
+    font-family: "Bebas Neue", serif;
+    transition: all ease 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #e9e6d6;
+    border: 5px solid #0c5c35;
+    border-radius: 35px;
+    color: #0c5c35;
+}
+
