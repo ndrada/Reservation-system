@@ -1,6 +1,6 @@
 .app-container {
     width: 100vw;
-    height: 90vh;
+    height: 85vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -8,25 +8,27 @@
 }
 
 .app-area {
-    width: 80vw;
+    width: 50vw;
     max-width: 600px;
+    min-width: 510px;
     height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .reservations-area {
     width: 100%;
-    height: 80%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     background-color: #343232;
-    border-radius: 35px;
-    padding: 25px;
+    border-radius: 30px;
+    padding: 40px 30px;
 }
 
 .reservations-form {
@@ -45,7 +47,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 10px;
+    gap: 20px;
 }
 
 .first-name-container, .last-name-container, .email, .phone {
@@ -57,19 +59,21 @@
 
 
 input {
-    border-radius: 20px;
+    border-radius: 12px;
     border: none;
-    padding: 5px;
+    padding: 0 20px;
     height: 40px;
+    font-family: "Bebas Neue", serif;
+    font-size: 20px;
+    color: #343232;
 }
 
 .party-size {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    height: 30%;
     width: 50%;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
 }
@@ -119,11 +123,11 @@ input {
 }
 
 .submit-button {
-    width: 30vw;
-    min-width: 200px;
-    max-width: 450px;
+    width: 50vw;
+    min-width: 510px;
+    max-width: 600px;
     height: 75px;
-    border-radius: 35px;
+    border-radius: 25px;
     border: none;
     background-color: #0c5c35;
     color: #e9e6d6;
@@ -135,7 +139,7 @@ input {
 .submit-button:hover {
     background-color: #e9e6d6;
     border: 5px solid #0c5c35;
-    border-radius: 35px;
+    border-radius: 25px;
     color: #0c5c35;
 }
 

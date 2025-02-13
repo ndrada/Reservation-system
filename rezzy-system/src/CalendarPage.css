@@ -1,0 +1,104 @@
+.app-container {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-area {
+    width: 50vw;
+    max-width: 600px;
+    min-width: 510px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 30px;
+    background-color: #343232;
+    border-radius: 30px;
+}
+
+h4, h5 {
+    font-weight: normal;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.date-button {
+    background: white;
+    border: none;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+
+.date-button:hover {
+    background: #0c5c35;
+    color: white;
+}
+
+.selected {
+    background: #0c5c35;
+    color: white;
+}
+
+.time-list {
+    display: flex;
+    gap: 10px;
+}
+
+.time-button {
+    background: #343232;
+    border: none;
+    padding: 10px 15px;
+    border: 1px solid #e9e6d6;
+    color: #e9e6d6;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+
+.time-button:hover, .time-button:focus {
+    background: #e9e6d6;
+    color: #343232;
+}
+
+.selected-time {
+    background: #e9e6d6 !important;
+    color: #343232 !important;
+    font-weight: bold;
+}
+
+
+.confirm-button {
+    background: #0c5c35;
+    border: none;
+    height: 75px;
+    border-radius: 25px;
+    color: #e9e6d6;
+    padding: 15px 30px;
+    font-size: 35px;
+    font-family: "Bebas Neue", serif;
+    cursor: pointer;
+    width: 50vw;
+    min-width: 510px;
+    max-width: 600px;
+}
+
+.confirm-button:hover {
+    background: #e9e6d6;
+    color: #0c5c35;
+    border: 2px solid #0c5c35;
+}

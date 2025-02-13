@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "./ReservationArea.css";
+import "./ReservationPage.css";
+import CalendarPage from "./CalendarPage";
 
-const ReservationApp = () => {
-    const [counter, setCounter] = useState(1); // Corrected useState
+const ReservationPage = ({onSubmit}) => {
+    const [counter, setCounter] = useState(1); 
 
-    const handleClick = () => {
-        console.log("Submit clicked! Party size:", counter);
-        // Add form submission logic here
+    const handleSubmit = () => {
+        onSubmit(counter);
     };
 
     return (
@@ -19,16 +19,16 @@ const ReservationApp = () => {
                     <div className="reservations-form">
                         <div className="name-container">
                             <div className="first-name-container">
-                                <label htmlFor="firstName">First name</label> {/* Corrected htmlFor */}
+                                <label htmlFor="firstName">First name</label>
                                 <input type="text" name="firstName" id="firstName" />
                             </div>
                             <div className="last-name-container">
-                                <label htmlFor="lastName">Last name</label> {/* Corrected htmlFor */}
+                                <label htmlFor="lastName">Last name</label>
                                 <input type="text" name="lastName" id="lastName" />
                             </div>
                         </div>
                         <div className="email">
-                            <label htmlFor="email">Email</label> {/* Corrected htmlFor */}
+                            <label htmlFor="email">Email</label>
                             <input type="email" name="email" id="email" />
                         </div>
                         <div className="phone">
@@ -61,8 +61,8 @@ const ReservationApp = () => {
                 </div>
 
                 <div className="button-area">
-                    <button className="submit-button" onClick={handleClick}>
-                        Submit
+                    <button className="submit-button" onClick={handleSubmit}>
+                        Pick a date
                     </button>
                 </div>
             </div>
@@ -70,4 +70,4 @@ const ReservationApp = () => {
     );
 };
 
-export default ReservationApp;
+export default ReservationPage;
