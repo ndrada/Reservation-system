@@ -4,14 +4,27 @@ import "./ReservationDetailsPage.css";
 const ReservationDetailsPage = ({ reservationData, onConfirm }) => {
   return (
     <div className="app-container">
+      <div className="header">
+        <h5>Logo here</h5>
+      </div>
       <div className="reservation-details-area">
-        <h4>Reservation details</h4>
+        <div className="reservation-details-header">
+          <h4>Reservation Details</h4>
+        </div>
         
         <div className="details">
-          <p><strong>Name:</strong> {reservationData.name}</p>
-          <p><strong>Date:</strong> {reservationData.date}</p>
-          <p><strong>Time:</strong> {reservationData.time}</p>
-          <p><strong>Party size:</strong> {reservationData.partySize}</p>
+          <div className="res-name">
+            <p>Name: </p><h4>{reservationData.name}</h4>
+          </div>
+          <div className="res-date">
+            <p>Date: </p><h4>{reservationData.date}</h4>
+          </div>
+          <div className="res-time">
+            <p>Time: </p><h4>{reservationData.time}</h4>
+          </div>
+          <div className="res-size">
+            <p>Party size: </p><h4>{reservationData.partySize}</h4>
+          </div>
         </div>
 
         <div className="notes">
@@ -22,10 +35,9 @@ const ReservationDetailsPage = ({ reservationData, onConfirm }) => {
             onChange={(e) => onConfirm({ ...reservationData, notes: e.target.value })}
           ></textarea>
         </div>
-
-        <button className="reserve-button" onClick={() => onConfirm(reservationData)}>
-          Reserve
-        </button>
+      </div>
+      <div className="button-area">
+        <button className="submit-button" onClick={() => onConfirm(reservationData)}>Reserve</button>
       </div>
     </div>
   );
