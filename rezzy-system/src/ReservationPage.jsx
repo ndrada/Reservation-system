@@ -4,9 +4,14 @@ import CalendarPage from "./CalendarPage";
 
 const ReservationPage = ({onSubmit}) => {
     const [counter, setCounter] = useState(1); 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
 
     const handleSubmit = () => {
-        onSubmit(counter);
+        const fullName = `${firstName} ${lastName}`;
+        onSubmit(fullName, counter);
     };
 
     return (
@@ -20,11 +25,23 @@ const ReservationPage = ({onSubmit}) => {
                         <div className="name-container">
                             <div className="first-name-container">
                                 <label htmlFor="firstName">First name</label>
-                                <input type="text" name="firstName" id="firstName" />
+                                <input 
+                                type="text" 
+                                name="firstName" 
+                                id="firstName" 
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                />
                             </div>
                             <div className="last-name-container">
                                 <label htmlFor="lastName">Last name</label>
-                                <input type="text" name="lastName" id="lastName" />
+                                <input 
+                                type="text" 
+                                name="lastName" 
+                                id="lastName" 
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                />
                             </div>
                         </div>
                         <div className="email">
@@ -33,7 +50,13 @@ const ReservationPage = ({onSubmit}) => {
                         </div>
                         <div className="phone">
                             <label htmlFor="phone">Phone</label>
-                            <input type="tel" name="phone" id="phone" />
+                            <input 
+                            type="tel" 
+                            name="phone" 
+                            id="phone" 
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            />
                         </div>
                     </div>
                     <div className="party-size">

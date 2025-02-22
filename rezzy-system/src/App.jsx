@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReservationPage from './ReservationPage';
 import CalendarPage from './CalendarPage';
-import ReservationDetailsPage from './ReservationDetailsPage';
+import ReservationDetails from './ReservationDetails';
 import './App.css';
 
 function App() {
@@ -49,7 +49,7 @@ function App() {
         />
       )}
       {step === 3 && (
-        <ReservationDetailsPage 
+        <ReservationDetails 
           reservationData={reservationData}
           onConfirm={handleConfirm}
         />

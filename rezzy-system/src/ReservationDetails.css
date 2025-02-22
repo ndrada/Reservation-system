@@ -1,0 +1,94 @@
+.app-container {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-area {
+    width: 50vw;
+    max-width: 600px;
+    min-width: 510px;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.reservations-details-area {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #343232;
+    border-radius: 30px;
+    padding: 40px 30px;
+}
+
+.reservation-details-header h4 {
+    font-size: 14px;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.res-name, .res-date, .res-time, .res-size {
+    display: flex;
+    flex-direction: column;
+}
+
+.res-name h4, .res-date h4, .res-time h4, .res-size h4 {
+    font-size: 27px;
+    font-family: "Bebas Neue", serif;
+    font-weight: bold;
+}
+
+.notes {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    text-align: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+textarea {
+    height: 60px;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.submit-button {
+    width: 50vw;
+    min-width: 510px;
+    max-width: 600px;
+    height: 75px;
+    border-radius: 25px;
+    border: none;
+    background-color: #0c5c35;
+    color: #e9e6d6;
+    font-size: 35px;
+    font-family: "Bebas Neue", serif;
+    transition: all ease 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #e9e6d6;
+    border: 5px solid #0c5c35;
+    border-radius: 25px;
+    color: #0c5c35;
+}

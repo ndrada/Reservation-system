@@ -11,13 +11,13 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
-        setAvailableTimes(times); // Show available times after date selection
-        onDateSelect(date); // Send selected date to parent (App.js)
+        setAvailableTimes(times); 
+        onDateSelect(date); 
     };
 
     const handleTimeClick = (time) => {
         setSelectedTime(time);
-        onTimeSelect(time); // Send selected time to parent (App.js)
+        onTimeSelect(time);
     };
 
     return (
@@ -25,45 +25,49 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
             <div className="header">
                 <h5>Logo here</h5>
             </div>
-            <div className="calendar-area">
-                <h4>Pick a date</h4>
-                <div className="calendar">
-                    <div className="calendar-grid">
-                        {[...Array(30)].map((_, i) => (
-                            <button
-                                key={i}
-                                className={`date-button ${selectedDate === i + 1 ? "selected" : ""}`}
-                                onClick={() => handleDateClick(i + 1)}
-                            >
-                                {i + 1}
-                            </button>
-                        ))}
+            <div className="app-area">
+                <div className="calendar-area">
+                    <div className="calendar-header">
+                        <h4>Pick a date</h4>
                     </div>
-                </div>
-
-                {/* Show available times when a date is selected */}
-                {selectedDate && (
-                    <div className="available-times">
-                        <h5>Showing available times for {selectedDate}</h5>
-                        <div className="time-list">
-                            {availableTimes.map((time, index) => (
+                    <div className="calendar">
+                        <div className="calendar-grid">
+                            {[...Array(30)].map((_, i) => (
                                 <button
-                                    key={index}
-                                    className={`time-button ${selectedTime === time ? "selected-time" : ""}`}
-                                    onClick={() => handleTimeClick(time)}
+                                    key={i}
+                                    className={`date-button ${selectedDate === i + 1 ? "selected" : ""}`}
+                                    onClick={() => handleDateClick(i + 1)}
                                 >
-                                    {time}
+                                    {i + 1}
                                 </button>
                             ))}
                         </div>
                     </div>
-                )}
-            </div>
 
-            <div className="button-area">
-                <button className="confirm-button" disabled={!selectedTime} onClick={() => console.log("Confirmed:", selectedDate, selectedTime)}>
-                    Confirm
-                </button>
+        
+                    {selectedDate && (
+                        <div className="available-times">
+                            <h5>Showing available times for {selectedDate}</h5>
+                            <div className="time-list">
+                                {availableTimes.map((time, index) => (
+                                    <button
+                                        key={index}
+                                        className={`time-button ${selectedTime === time ? "selected-time" : ""}`}
+                                        onClick={() => handleTimeClick(time)}
+                                    >
+                                        {time}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="button-area">
+                    <button className="confirm-button" disabled={!selectedTime} onClick={() => console.log("Confirmed:", selectedDate, selectedTime)}>
+                        Confirm
+                    </button>
+                </div>
             </div>
         </div>
     );
