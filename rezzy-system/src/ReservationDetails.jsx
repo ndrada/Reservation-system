@@ -2,6 +2,47 @@ import React, { useState } from "react";
 import "./ReservationDetails.css";
 
 const ReservationDetails = ({ reservationData, onConfirm }) => {
+    const [notes, setNotes] = useState(reservationData.notes || "");
+
+    const formatTime = (time) => {
+        if (!time) return "";
+        let [hour, minute] = time.split(":");
+        let period = hour >= 12 ? "PM" : "AM";
+        hour = hour % 12 || 12; // converts to am/pm 
+        return `${hour}:${minute} ${period}`;
+      };
+      
+    // send reservation to backend
+    const handleSubmitReservation = async () => {
+        const reservation = {
+            name: reservationData.name,
+            partySize: reservationData.partySize,
+            date: reservationData.selectedDate,
+            time: reservationData.selectedTime,
+            notes: notes, // use updated notes value
+        };
+
+        try {
+            const response = await fetch("http://localhost:5000/reservations", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(reservation),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to create reservation");
+            }
+
+            const data = await response.json();
+            console.log("Reservation saved:", data);
+            onConfirm(reservation); // move to confirmation step
+        } catch (error) {
+            console.error("Error submitting reservation:", error);
+        }
+    };
+
     return (
         <div className="app-container">
             <div className="header">
@@ -20,7 +61,7 @@ const ReservationDetails = ({ reservationData, onConfirm }) => {
                             <p>Date </p><h4>{reservationData.selectedDate}</h4>
                         </div>
                         <div className="res-time">
-                            <p>Time </p><h4>{reservationData.selectedTime}</h4>
+                            <p>Time </p><h4>{formatTime(reservationData.selectedTime)}</h4>
                         </div>
                         <div className="res-size">
                             <p>Party size </p><h4>{reservationData.partySize}</h4>
@@ -30,14 +71,16 @@ const ReservationDetails = ({ reservationData, onConfirm }) => {
                         <h5>Add special notes (optional)</h5>
                         <textarea
                             placeholder="Celebrating something special? Dining with kids? Allergies?"
-                            value={reservationData.notes}
-                            onChange={(e) => onConfirm({ ...reservationData, notes: e.target.value })}
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
                         ></textarea>
                     </div>
                 </div>
 
                 <div className="button-area">
-                    <button className="submit-button" onClick={() => onConfirm(reservationData)}>Reserve</button>
+                    <button className="submit-button" onClick={handleSubmitReservation}>
+                        Reserve
+                    </button>
                 </div>
             </div>
         </div>
