@@ -11,7 +11,7 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
         if (selectedDate) {
             const formattedDate = selectedDate; 
     
-            fetch(`http://localhost:5000/reservations?date=${selectedDate}`)
+            fetch(`http://localhost:5000/reservations?date=${formattedDate}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log("API Response:", data); // ✅ debugging Log
