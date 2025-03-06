@@ -34,7 +34,7 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
       
     // handle date selection
     const handleDateClick = (day) => {
-        const formattedDate = `2025-02-${String(day).padStart(2, "0")}`; // february
+        const formattedDate = `2025-03-${String(day).padStart(2, "0")}`; // february
         setSelectedDate(formattedDate);
         onDateSelect(formattedDate); 
       };
