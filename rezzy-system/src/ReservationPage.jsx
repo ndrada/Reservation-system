@@ -14,6 +14,15 @@ const ReservationPage = ({onSubmit}) => {
         onSubmit(fullName, counter);
     };
 
+    useEffect(() => { 
+        fetch("http://localhost:5000/settings")
+        .then((res) => res.json())
+        .then((data) => {
+            setMaxPeple(data.max_people);
+        })
+        .catch((error) => console.error("error fetching settings",error));
+    }, []);
+
     return (
         <div className="app-container">
             <div className="header">
@@ -74,8 +83,8 @@ const ReservationPage = ({onSubmit}) => {
                             </div>
                             <button
                                 className="plus-button"
-                                onClick={() => setCounter((prev) => prev + 1)}
-                                disabled={counter === 8}
+                                onClick={() => setCounter((prev) => Math.min(prev + 1, maxPeple))}
+                                disabled={counter >= 8}
                             >
                                 +
                             </button>
