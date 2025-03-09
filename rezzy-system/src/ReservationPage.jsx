@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ReservationPage.css";
 import CalendarPage from "./CalendarPage";
 
@@ -8,6 +8,7 @@ const ReservationPage = ({onSubmit}) => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [maxPeople, setMaxPeple] = useState(8);
 
     const handleSubmit = () => {
         const fullName = `${firstName} ${lastName}`;
@@ -83,8 +84,8 @@ const ReservationPage = ({onSubmit}) => {
                             </div>
                             <button
                                 className="plus-button"
-                                onClick={() => setCounter((prev) => Math.min(prev + 1, maxPeple))}
-                                disabled={counter >= 8}
+                                onClick={() => setCounter((prev) => Math.min(prev + 1, maxPeople))}
+                                disabled={counter >= maxPeople}
                             >
                                 +
                             </button>

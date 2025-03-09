@@ -1,12 +1,54 @@
 import React, { useState, useEffect } from "react";
 import "./CalendarPage.css";
 
-const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
+const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [availableTimes, setAvailableTimes] = useState([]);
+    const [timeFrequency, setTimeFrequency] = useState(30);
+    const [maxPeople, setMaxPeople] = useState(8);
+    const [lastReservationTime, setLastReservationTime] = useState("20:30");
 
-    // Function to fetch available times when a date is selected
+    // fetch settings on load
+    useEffect(() => {
+        fetch("http://localhost:5000/settings")
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("API Response for reservations:", data);
+            setTimeFrequency(data.time_frequency === "hourly" ? 60 : 30);
+            setMaxPeople(data.max_people);
+            setLastReservationTime(data.last_reservation_time);
+        })
+        .catch((error) => console.error("error fetching settings:", error));
+    }, []);
+
+    //generate the next 28 days
+    const generateDates = () => {
+        const today = new Date();
+        return[...Array(28)].map((_, i) => {
+            const futureDate = new Date(today);
+            futureDate.setDate(today.getDate() + i);
+            return futureDate.toISOString().split("T")[0];
+        });
+    };
+
+    //generate time slots based on time frequency
+    const generateTimeSlots = () => {
+        let startTime = new Date(`2025-03-01T17:30:00`); //5:30PM default start
+        let endTime = new Date(`2025-03-01T${lastReservationTime}`);
+        let slots = [];
+
+        while (startTime <= endTime) {
+            const formatted = startTime.toTimeString().split(" ")[0];
+            slots.push(formatted);
+            startTime.setMinutes(startTime.getMinutes() + timeFrequency);
+        }
+
+        console.log("Generated time slots:", slots);
+
+        return slots;
+    }
+
     useEffect(() => {
         if (selectedDate) {
             const formattedDate = selectedDate; 
@@ -15,14 +57,27 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
             .then((res) => res.json())
             .then((data) => {
                 console.log("API Response:", data); // ✅ debugging Log
-                const takenTimes = data.map((res) => res.time);
-                const allTimes = ["17:30:00", "18:30:00", "19:00:00", "20:00:00"];
-                const freeTimes = allTimes.filter((time) => !takenTimes.includes(time));
-                setAvailableTimes(freeTimes);
+                const takenTimes = data.reduce((acc, res) => {
+                    acc[res.time] = (acc[res.time] || 0) + res.party_size;
+                    return acc;
+                    },
+                {});
+
+                console.log("Taken times before filtering:", takenTimes);
+
+                const timeSlots = generateTimeSlots().filter((time) => {
+                    const bookedPeople = takenTimes[time] || 0;
+                    console.log(`Checking time slot: ${time}, booked: ${bookedPeople}, max: ${maxPeople}`);
+                    const reqSpace = (partySize ?? 1);
+                    return bookedPeople + reqSpace <= maxPeople;
+                });
+                console.log("before setting available times:", timeSlots);
+                setAvailableTimes(timeSlots);
+                console.log("after setting available times:", timeSlots);
             })
             .catch((error) => console.error("Error fetching reservations:", error));
         }
-    }, [selectedDate]);
+    }, [selectedDate, partySize, maxPeople, timeFrequency]);
     
     const formatTime = (time) => {
         if (!time) return "";
@@ -33,10 +88,9 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
       };
       
     // handle date selection
-    const handleDateClick = (day) => {
-        const formattedDate = `2025-03-${String(day).padStart(2, "0")}`; // february
-        setSelectedDate(formattedDate);
-        onDateSelect(formattedDate); 
+    const handleDateClick = (date) => {
+        setSelectedDate(date);
+        onDateSelect(date); 
       };
       
     // handle time selection
@@ -59,13 +113,13 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
                     {/* calendar section */}
                     <div className="calendar">
                         <div className="calendar-grid">
-                            {[...Array(30)].map((_, i) => (
+                            {generateDates().map((date, i) => (
                                 <button
-                                    key={i}
-                                    className={`date-button ${selectedDate === i + 1 ? "selected" : ""}`}
-                                    onClick={() => handleDateClick(i + 1)}
+                                key={i}
+                                className={`date-button ${selectedDate === date ? "selected" : ""}`}
+                                onClick={() => handleDateClick(date)}
                                 >
-                                    {i + 1}
+                                    {new Date(date).toLocaleDateString("en-US", {month:"numeric", day:"numeric"})}
                                 </button>
                             ))}
                         </div>
@@ -74,6 +128,7 @@ const CalendarPage = ({ onDateSelect, onTimeSelect }) => {
                     {/* available times section */}
                     {selectedDate && (
                         <div className="available-times">
+                            {console.log("rendering available times in the ui:", availableTimes)}
                             <h5>Showing available times for {selectedDate}</h5>
                             <div className="time-list">
                                 {availableTimes.length > 0 ? (
