@@ -1,10 +1,12 @@
 .app-container {
     width: 100vw;
     height: 85vh;
+    min-height: 650px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
 }
 
 .app-area {
@@ -12,6 +14,7 @@
     max-width: 600px;
     min-width: 510px;
     height: 60vh;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +24,7 @@
 
 .reservations-area {
     width: 100%;
-    height: 90%;
+    height: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;

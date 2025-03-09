@@ -14,7 +14,6 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
         fetch("http://localhost:5000/settings")
         .then((res) => res.json())
         .then((data) => {
-            console.log("API Response for reservations:", data);
             setTimeFrequency(data.time_frequency === "hourly" ? 60 : 30);
             setMaxPeople(data.max_people);
             setLastReservationTime(data.last_reservation_time);
@@ -25,11 +24,15 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
     //generate the next 28 days
     const generateDates = () => {
         const today = new Date();
-        return[...Array(28)].map((_, i) => {
-            const futureDate = new Date(today);
+        today.setDate(today.getDate() + 1);
+
+        const datesArray = [...Array(28)].map((_, i) => {
+            const futureDate = new Date(today.getTime());
             futureDate.setDate(today.getDate() + i);
             return futureDate.toISOString().split("T")[0];
         });
+
+        return datesArray;
     };
 
     //generate time slots based on time frequency
@@ -44,7 +47,6 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
             startTime.setMinutes(startTime.getMinutes() + timeFrequency);
         }
 
-        console.log("Generated time slots:", slots);
 
         return slots;
     }
@@ -56,24 +58,19 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
             fetch(`http://localhost:5000/reservations?date=${formattedDate}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log("API Response:", data); // ✅ debugging Log
                 const takenTimes = data.reduce((acc, res) => {
                     acc[res.time] = (acc[res.time] || 0) + res.party_size;
                     return acc;
                     },
                 {});
 
-                console.log("Taken times before filtering:", takenTimes);
 
                 const timeSlots = generateTimeSlots().filter((time) => {
                     const bookedPeople = takenTimes[time] || 0;
-                    console.log(`Checking time slot: ${time}, booked: ${bookedPeople}, max: ${maxPeople}`);
                     const reqSpace = (partySize ?? 1);
                     return bookedPeople + reqSpace <= maxPeople;
                 });
-                console.log("before setting available times:", timeSlots);
                 setAvailableTimes(timeSlots);
-                console.log("after setting available times:", timeSlots);
             })
             .catch((error) => console.error("Error fetching reservations:", error));
         }
@@ -89,6 +86,11 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
       
     // handle date selection
     const handleDateClick = (date) => {
+        console.log("clicked date (raw):", date);
+
+        const parsedDate = new Date(date);
+        console.log("parsed date:", parsedDate.toISOString());
+
         setSelectedDate(date);
         onDateSelect(date); 
       };
@@ -114,12 +116,14 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
                     <div className="calendar">
                         <div className="calendar-grid">
                             {generateDates().map((date, i) => (
+                                console.log(`rendering button for date: ${date} (index: ${i})`),
                                 <button
                                 key={i}
                                 className={`date-button ${selectedDate === date ? "selected" : ""}`}
                                 onClick={() => handleDateClick(date)}
                                 >
-                                    {new Date(date).toLocaleDateString("en-US", {month:"numeric", day:"numeric"})}
+                                    {/* {new Date(date).toLocaleDateString("en-US", {month:"numeric", day:"numeric"})} */}
+                                    {date.split("-").slice(1).join("/")}
                                 </button>
                             ))}
                         </div>
@@ -128,7 +132,6 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
                     {/* available times section */}
                     {selectedDate && (
                         <div className="available-times">
-                            {console.log("rendering available times in the ui:", availableTimes)}
                             <h5>Showing available times for {selectedDate}</h5>
                             <div className="time-list">
                                 {availableTimes.length > 0 ? (
