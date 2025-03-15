@@ -14,7 +14,12 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
         fetch("https://rezzy-staff-app.onrender.com/settings")
         .then((res) => res.json())
         .then((data) => {
-            setTimeFrequency(data.time_frequency === "hourly" ? 60 : 30);
+            if([15, 30, 60].includes(data.time_frequency)) {
+                setTimeFrequency(data.time_frequency);
+            } else {
+                console.warn ("unexpected time_frequency value:", data.time_frequency);
+                setTimeFrequency(30);
+            }
             setMaxPeople(data.max_people);
             setLastReservationTime(data.last_reservation_time);
         })
