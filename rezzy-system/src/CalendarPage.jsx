@@ -11,7 +11,7 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
 
     // fetch settings on load
     useEffect(() => {
-        fetch("http://localhost:5000/settings")
+        fetch("https://rezzy-staff-app.onrender.com/settings")
         .then((res) => res.json())
         .then((data) => {
             setTimeFrequency(data.time_frequency === "hourly" ? 60 : 30);
@@ -55,7 +55,7 @@ const CalendarPage = ({ onDateSelect, onTimeSelect, partySize }) => {
         if (selectedDate) {
             const formattedDate = selectedDate; 
     
-            fetch(`http://localhost:5000/reservations?date=${formattedDate}`)
+            fetch(`https://rezzy-staff-app.onrender.com/reservations?date=${formattedDate}`)
             .then((res) => res.json())
             .then((data) => {
                 const takenTimes = data.reduce((acc, res) => {

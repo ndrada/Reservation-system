@@ -23,7 +23,7 @@ const ReservationDetails = ({ reservationData, onConfirm }) => {
         };
 
         try {
-            const response = await fetch("http://localhost:5000/reservations", {
+            const response = await fetch("https://rezzy-staff-app.onrender.com/reservations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

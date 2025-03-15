@@ -16,7 +16,7 @@ const ReservationPage = ({onSubmit}) => {
     };
 
     useEffect(() => { 
-        fetch("http://localhost:5000/settings")
+        fetch("https://rezzy-staff-app.onrender.com/settings")
         .then((res) => res.json())
         .then((data) => {
             setMaxPeple(data.max_people);
